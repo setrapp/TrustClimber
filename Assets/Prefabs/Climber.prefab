@@ -305,7 +305,11 @@ MonoBehaviour:
   partner: {fileID: 0}
   leftHand: {fileID: 100006}
   rightHand: {fileID: 100004}
+  bodyBelowHands: 1
   maxArmDistance: 3
+  normalHandColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightHandColor: {r: 0, g: 0, b: 0, a: 0}
+  maxPartnerDistance: 10
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

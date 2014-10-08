@@ -11,12 +11,12 @@ public class ClimbInput : MonoBehaviour {
 	public float maxArmDistance;
 	public Color normalHandColor;
 	public Color highlightHandColor;
+	public float maxPartnerDistance;
 
 	void Awake()
 	{
 		MoveBodyBetweenHands();
-		leftHand.renderer.material.color = highlightHandColor;
-		rightHand.renderer.material.color = normalHandColor;
+		ResetHandColors();
 	}
 
 	void Update()
@@ -24,6 +24,8 @@ public class ClimbInput : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			isClimbing = !isClimbing;
+			ResetHandColors();
+			
 			/*if (partner != null)
 			{
 				partner.isClimbing = true;
@@ -85,7 +87,23 @@ public class ClimbInput : MonoBehaviour {
 		{
 			if (leftHand.renderer.material.color != normalHandColor || rightHand.renderer.material.color != normalHandColor)
 			{
-				leftHand.renderer.material.color = normalHandColor;
+				
+			}
+		}
+	}
+
+	private void ResetHandColors()
+	{
+		leftHand.renderer.material.color = normalHandColor;
+		rightHand.renderer.material.color = normalHandColor;
+		if (isClimbing)
+		{
+			if (movingLeftHand)
+			{
+				leftHand.renderer.material.color = highlightHandColor;
+			}
+			else
+			{
 				rightHand.renderer.material.color = normalHandColor;
 			}
 		}
@@ -95,6 +113,11 @@ public class ClimbInput : MonoBehaviour {
 	{
 		Vector3 newPosition = (leftHand.transform.position + rightHand.transform.position) / 2;
 		newPosition.y -= bodyBelowHands;
+		if ((newPosition - partner.transform.position).sqrMagnitude > Mathf.Pow(maxPartnerDistance, 2))
+		{
+			Vector3 fromPartner = (newPosition - partner.transform.position).normalized;
+			newPosition = partner.transform.position + (fromPartner * maxPartnerDistance);
+		}
 		leftHand.transform.position -= (newPosition - transform.position);
 		rightHand.transform.position -= (newPosition - transform.position);
 		transform.position = newPosition;
