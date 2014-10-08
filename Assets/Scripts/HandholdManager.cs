@@ -15,7 +15,7 @@ public class HandholdManager : MonoBehaviour {
 		}
 	}
 
-	public Handhold NearestHandhold(Handhold.ButtonType buttonType, Vector3 fromPosition, float aboveY)
+	public Handhold NearestHandhold(Handhold.ButtonType buttonType, Vector3 fromPosition, float extremeY, bool moveUp)
 	{
 		GameObject[] handholds = GameObject.FindGameObjectsWithTag("Handhold");
 		Handhold nearHandhold = null;
@@ -24,7 +24,8 @@ public class HandholdManager : MonoBehaviour {
 		{
 			Handhold handhold = handholds[i].GetComponent<Handhold>();
 			float sqrDist = (handholds[i].transform.position - fromPosition).sqrMagnitude;
-			if ((handhold != null && handhold.buttonType == buttonType && handhold.transform.position.y > aboveY) && (nearHandhold == null || sqrDist < minSqrDist))
+			bool correctDirection = (moveUp && handhold.transform.position.y >= extremeY) || (!moveUp && handhold.transform.position.y <= extremeY);
+			if ((handhold != null && handhold.buttonType == buttonType && correctDirection) && (nearHandhold == null || sqrDist < minSqrDist))
 			{
 				nearHandhold = handhold;
 				minSqrDist = sqrDist;

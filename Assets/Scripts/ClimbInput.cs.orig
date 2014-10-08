@@ -32,6 +32,7 @@ public class ClimbInput : MonoBehaviour {
 			}*/
 		}
 
+<<<<<<< HEAD
 		if (isClimbing)
 		{
 			bool moveUp = true;
@@ -47,21 +48,21 @@ public class ClimbInput : MonoBehaviour {
 				handPos = rightHand.transform.position;
 			}
 
-			if (Input.GetButtonDown("Top"))
+			if (Input.GetKeyDown("w"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.W, handPos, transform.position.y, moveUp);
 			}
-			else if (Input.GetButtonDown("Left"))
+			else if (Input.GetKeyDown("a"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.A, handPos, transform.position.y, moveUp);
 			}
-			else if (Input.GetButtonDown("Bottom"))
+			else if (Input.GetKeyDown("s"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.S, handPos, transform.position.y, moveUp);
 			}
-			else if (Input.GetButtonDown("Right"))
+			else if (Input.GetKeyDown("d"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.D, handPos, transform.position.y, moveUp);
 			}
 
 			if (nextHandhold != null && (nextHandhold.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(maxArmDistance, 2))
@@ -89,6 +90,23 @@ public class ClimbInput : MonoBehaviour {
 			{
 				
 			}
+=======
+		if (Input.GetButtonDown("Top"))
+		{
+			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top, handPos, transform.position.y);
+		}
+		else if (Input.GetButtonDown("Left"))
+		{
+			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left, handPos, transform.position.y);
+		}
+		else if (Input.GetButtonDown("Bottom"))
+		{
+			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom, handPos, transform.position.y);
+		}
+		else if (Input.GetButtonDown("Right"))
+		{
+			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right, handPos, transform.position.y);
+>>>>>>> develop
 		}
 	}
 
