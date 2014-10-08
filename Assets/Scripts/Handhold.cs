@@ -7,27 +7,53 @@ public class Handhold : MonoBehaviour {
 
 	public enum ButtonType
 	{
-		W = 0,
-		A,
-		S,
-		D,
+		Top = 0,
+		Left,
+		Bottom,
+		Right,
 	}
 
 	void Update()
 	{
 		switch(buttonType)
 		{
-			case ButtonType.W:
-				idText.text = "w";
+			case ButtonType.Top:
+				renderer.material.color = Color.yellow;
+				if(Input.GetJoystickNames().Length > 0)
+				{
+					idText.text = "Y";
+					
+				}
+				else
+					idText.text = "w";
 				break;
-			case ButtonType.A:
-				idText.text = "a";
+			case ButtonType.Right:
+				renderer.material.color = Color.red;
+				if(Input.GetJoystickNames().Length > 0)
+				{
+					idText.text = "B";
+					
+				}
+				else
+					idText.text = "a";
 				break;
-			case ButtonType.S:
-				idText.text = "s";
+			case ButtonType.Bottom:
+				renderer.material.color = Color.green;
+				if(Input.GetJoystickNames().Length > 0)
+				{
+					idText.text = "A";
+				}
+				else
+					idText.text = "s";
 				break;
-			case ButtonType.D:
-				idText.text = "d";
+			case ButtonType.Left:
+				renderer.material.color = Color.cyan;
+				if(Input.GetJoystickNames().Length > 0)
+				{
+					idText.text = "X";
+				}
+				else
+					idText.text = "d";
 				break;
 		}
 	}
