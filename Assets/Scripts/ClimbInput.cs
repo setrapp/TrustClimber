@@ -22,21 +22,21 @@ public class ClimbInput : MonoBehaviour {
 			handPos = rightHand.transform.position;
 		}
 
-		if (Input.GetKeyDown("w"))
+		if (Input.GetButtonDown("Top"))
 		{
-			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.W, handPos, transform.position.y);
+			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top, handPos, transform.position.y);
 		}
-		else if (Input.GetKeyDown("a"))
+		else if (Input.GetButtonDown("Left"))
 		{
-			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.A, handPos, transform.position.y);
+			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left, handPos, transform.position.y);
 		}
-		else if (Input.GetKeyDown("s"))
+		else if (Input.GetButtonDown("Bottom"))
 		{
-			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.S, handPos, transform.position.y);
+			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom, handPos, transform.position.y);
 		}
-		else if (Input.GetKeyDown("d"))
+		else if (Input.GetButtonDown("Right"))
 		{
-			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.D, handPos, transform.position.y);
+			nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right, handPos, transform.position.y);
 		}
 
 		if (nextHandhold != null && (nextHandhold.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(maxArmDistance, 2))
