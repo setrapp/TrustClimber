@@ -122,8 +122,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .75, y: 1.5, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_LocalPosition: {x: .75, y: 1, z: 0}
+  m_LocalScale: {x: .600000024, y: .600000024, z: .5}
   m_Children: []
   m_Father: {fileID: 400008}
   m_RootOrder: 1
@@ -135,7 +135,7 @@ Transform:
   m_GameObject: {fileID: 100006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.75, y: 1, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_LocalScale: {x: .600000024, y: .600000024, z: .5}
   m_Children: []
   m_Father: {fileID: 400008}
   m_RootOrder: 0
@@ -301,9 +301,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53037ed5c1016a24fbcefc7558ab3fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isClimbing: 0
+  partner: {fileID: 0}
   leftHand: {fileID: 100006}
   rightHand: {fileID: 100004}
-  maxArmDistance: 0
+  bodyBelowHands: 1
+  maxArmDistance: 3
+  handPos: {x: 0, y: 0, z: 0}
+  normalHandColor: {r: 1, g: 1, b: 1, a: 0}
+  highlightHandColor: {r: .944827557, g: 0, b: 1, a: 0}
+  maxPartnerDistance: 10
+  moveUp: 0
+  leftHang: {x: 0, y: 0, z: 0}
+  rightHang: {x: 0, y: 0, z: 0}
+  lHandHanging: 0
+  rHandHanging: 0
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
