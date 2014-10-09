@@ -7,9 +7,20 @@ public class Handhold : MonoBehaviour {
 	private ClimbInput climb;
 	private GameObject player;
 
+	//Rock falling Elements
+	private GameObject leftHand;
+	private GameObject rightHand;
+	private Vector3 myPosition;
+	public bool falling = false;
+	private float fallRate = 4.0f;
+	private float dislodge = 4.0f;
+
 	void Start(){
 		player = GameObject.FindGameObjectWithTag("Player");
+		rightHand = player.GetComponent<ClimbInput>().rightHand;
+		leftHand = player.GetComponent<ClimbInput>().leftHand;
 		climb = player.GetComponent<ClimbInput>();
+		myPosition = transform.position;
 	}
 
 	public enum ButtonType
@@ -101,5 +112,30 @@ public class Handhold : MonoBehaviour {
 				}
 				break;
 		}
+
+		if(leftHand.transform.position == myPosition || rightHand.transform.position == myPosition)
+		{
+			//print ("held");
+			Invoke("AboutToFall",dislodge);
+		}
+
+		if(falling)
+		{
+			if(leftHand.transform.position == myPosition)
+			{
+				player.SendMessage("SlipLeft",SendMessageOptions.DontRequireReceiver);
+			}
+			else if (rightHand.transform.position == myPosition)
+			{
+				player.SendMessage("SlipRight",SendMessageOptions.DontRequireReceiver);
+			}
+			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
+		}
+
+	}
+
+	public void AboutToFall()
+	{
+		falling = true;
 	}
 }

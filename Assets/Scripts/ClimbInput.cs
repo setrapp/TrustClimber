@@ -15,10 +15,22 @@ public class ClimbInput : MonoBehaviour {
 	public float maxPartnerDistance;
 	public bool moveUp;
 
+	//Falling
+	public Vector3 leftHang;
+	public Vector3 rightHang;
+	public bool lHandHanging = false;
+	public bool rHandHanging = false;
+	private float fallRate = 4.0f;
+
 	void Awake()
 	{
 		MoveBodyBetweenHands();
 		ResetHandColors();
+
+		leftHang = new Vector3(-0.75f,-0.7f,0);
+
+		rightHang = new Vector3(0.75f,-0.7f,0);
+
 	}
 
 	void Update()
@@ -73,12 +85,14 @@ public class ClimbInput : MonoBehaviour {
 					leftHand.transform.position = nextHandhold.transform.position;
 					leftHand.renderer.material.color = normalHandColor;
 					rightHand.renderer.material.color = highlightHandColor;
+					lHandHanging = false;
 				}
 				else
 				{
 					rightHand.transform.position = nextHandhold.transform.position;
 					rightHand.renderer.material.color = normalHandColor;
 					leftHand.renderer.material.color = highlightHandColor;
+					rHandHanging = false;
 				}
 
 				movingLeftHand = !movingLeftHand;
@@ -92,7 +106,12 @@ public class ClimbInput : MonoBehaviour {
 				
 			}
 		}
-	}
+
+		if(lHandHanging && rHandHanging)
+		{
+			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
+		}
+	}// End of Update
 
 	private void ResetHandColors()
 	{
@@ -123,5 +142,17 @@ public class ClimbInput : MonoBehaviour {
 		leftHand.transform.position -= (newPosition - transform.position);
 		rightHand.transform.position -= (newPosition - transform.position);
 		transform.position = newPosition;
+	}
+
+	public void SlipLeft()
+	{
+		leftHand.transform.localPosition = leftHang;
+		lHandHanging = true;
+	}
+
+	public void SlipRight()
+	{
+		rightHand.transform.localPosition = rightHang;
+		rHandHanging = true;
 	}
 }
