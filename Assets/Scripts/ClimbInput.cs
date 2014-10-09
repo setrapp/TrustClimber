@@ -23,7 +23,7 @@ public class ClimbInput : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetButtonDown("Switch Climber"))
 		{
 			isClimbing = !isClimbing;
 			ResetHandColors();
@@ -37,7 +37,7 @@ public class ClimbInput : MonoBehaviour {
 		if (isClimbing)
 		{
 			moveUp = true;
-			if (Input.GetKey(KeyCode.LeftShift))
+			if (Input.GetAxis("Look Down") != 0)
 			{
 				moveUp = false;
 			}
