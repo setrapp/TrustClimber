@@ -36,8 +36,10 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
  
 	*/
 
-	public GameObject test;
-	public Transform target;
+	public GameObject climberOne;
+	public GameObject climberTwo;
+	
+	private Transform target;
 	public float resolution = 2F;							  //  Sets the amount of joints there are in the rope (1 = 1 joint for every 1 unit)
 	public float ropeDrag = 0.1F;								 //  Sets each joints Drag
 	public float ropeMass = 1F;							//  Sets each joints Mass
@@ -51,47 +53,158 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 	private LineRenderer line;							//  DONT MESS!	 The line renderer variable is set up when its assigned as a new component
 	private int segments = 0;					//  DONT MESS!	The number of segments is calculated based off of your distance * resolution
 	private bool rope = false;						 //  DONT MESS!	This is to keep errors out of your debug window! Keeps the rope from rendering when it doesnt exist...
-
+	private GameObject currentClimber;
+	private GameObject currentBelayer;
 
 	private int segmentNumber = 0;
+	public bool ropeLost = false;
+	public float RopeBetweenClimbers
+	{
+		get
+		{
+			int connectedSegments = (segments - 1) - segmentNumber;
+			float distance = (connectedSegments / resolution) + (connectedSegments * sjDistance);
+			return distance;
+		}
+	}
+
+	public bool IsTaught
+	{
+		get { return RopeBetweenClimbers < Vector3.Distance(ClimberManager.Instance.climber1.transform.position, ClimberManager.Instance.climber2.transform.position); }
+	}
+
+	public bool CanPullUp
+	{
+		get { return !IsTaught && !(ClimberManager.Instance.CurrentClimber.lHandHanging && ClimberManager.Instance.CurrentClimber.rHandHanging); }
+	}
 	
 	void Awake()
 	{
+		currentBelayer = climberTwo;
+		currentClimber = climberOne;
+		transform.position = climberTwo.transform.position;
+		target = climberOne.transform;
 		BuildRope();
+		UpdateCharacterRopes();
+
+		if (currentBelayer.GetComponent<HingeJoint2D>() == null)
+		{
+			HingeJoint2D belayerJoint = currentBelayer.AddComponent<HingeJoint2D>();
+			belayerJoint.connectedBody = gameObject.rigidbody2D;
+		}
 	}
 	
 	void Update()
 	{
-		if(Input.GetButtonDown("RopeIn"))
+		if (!ropeLost)
 		{
-			if(segmentNumber == 0)
+			if (Input.GetButtonDown("RopeIn"))
 			{
-				test.GetComponent<HingeJoint2D>().connectedBody = joints[1].rigidbody2D;
-				segmentNumber ++;
+				if (Input.GetJoystickNames().Length > 0)
+				{
+					if (Input.GetAxis("Belay") > .5f)
+						RopeIn();
+				}
+				else
+					RopeIn();
+			}
+
+
+			if (Input.GetButtonDown("RopeOut"))
+			{
+				if (Input.GetJoystickNames().Length > 0)
+				{
+					if (Input.GetAxis("Belay") < -.5f)
+						RopeOut();
+				}
+				else
+					RopeOut();
+			}
+
+			if (Input.GetButtonDown("Switch Climber"))
+			{
+				//Debug.Log(joints.Length);
+				if (currentClimber == climberOne)
+				{
+					Destroy(climberTwo.GetComponent<HingeJoint2D>());
+					Destroy(climberOne.GetComponent<SpringJoint2D>());
+					HingeJoint2D belayerJoint = climberOne.AddComponent<HingeJoint2D>();
+					belayerJoint.connectedBody = segmentNumber != 0 ? joints[segmentNumber].rigidbody2D : gameObject.rigidbody2D;
+					target = climberTwo.transform;
+					SpringJoint2D end = target.gameObject.AddComponent<SpringJoint2D>();
+					end.connectedBody = joints[joints.Length - 1].transform.rigidbody2D;
+					end.distance = sjDistance;
+					end.dampingRatio = sjDamping;
+					end.frequency = sjFrequency;
+					currentClimber = climberTwo;
+					currentBelayer = climberOne;
+				}
+				else
+				{
+					Destroy(climberOne.GetComponent<HingeJoint2D>());
+					Destroy(climberTwo.GetComponent<SpringJoint2D>());
+					HingeJoint2D belayerJoint = climberTwo.AddComponent<HingeJoint2D>();
+					belayerJoint.connectedBody = segmentNumber != 0 ? joints[segmentNumber].rigidbody2D : gameObject.rigidbody2D;
+					target = climberOne.transform;
+					SpringJoint2D end = target.gameObject.AddComponent<SpringJoint2D>();
+					end.connectedBody = joints[joints.Length - 1].transform.rigidbody2D;
+					end.distance = sjDistance;
+					end.dampingRatio = sjDamping;
+					end.frequency = sjFrequency;
+					currentClimber = climberOne;
+					currentBelayer = climberTwo;
+				}
+
+			}
+
+			UpdateCharacterRopes();
+		}
+
+	}
+
+	public bool RopeIn()
+	{
+		if (CanPullUp)
+		{
+			if (segmentNumber == 0)
+			{
+				currentBelayer.GetComponent<HingeJoint2D>().connectedBody = joints[1].rigidbody2D;
+				segmentNumber++;
 			}
 			else
 			{
-				if(segmentNumber < segments -2)
+				if (segmentNumber < segments - 2)
 				{
 					segmentNumber++;
-					Debug.Log(segmentNumber);
-					test.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
+					//Debug.Log(segmentNumber);
+					currentBelayer.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
 				}
 			}
+			return true;
 		}
+		return false;
+	}
 
-		if(Input.GetButtonDown("RopeOut"))
+	public bool RopeOut()
+	{
+		if (segmentNumber > 0 && Input.GetAxis("Braking") < .5)
 		{
-			if(segmentNumber > 0)
-			{
-				segmentNumber--;
-				if(segmentNumber == 0)
-					test.GetComponent<HingeJoint2D>().connectedBody = gameObject.rigidbody2D;
-				else
-					test.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
-			}
-		}
+			segmentNumber--;
+			if (segmentNumber == 0)
+				currentBelayer.GetComponent<HingeJoint2D>().connectedBody = gameObject.rigidbody2D;
+			else
+				currentBelayer.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
 
+			return true;
+		}
+		else
+			return false;
+	}
+
+	public void LoseRope()
+	{
+		Destroy(currentBelayer.GetComponent<HingeJoint2D>());
+		ropeLost = true;
 	}
 
 	void LateUpdate()
@@ -126,7 +239,7 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		line.SetVertexCount(segments);
 		segmentPos = new Vector3[segments];
 		joints = new GameObject[segments];
-		Debug.Log(joints.Length);
+		//Debug.Log(joints.Length);
 		segmentPos[0] = transform.position;
 		segmentPos[segments-1] = target.position;
 		
@@ -193,5 +306,19 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		segmentPos = new Vector3[0];
 		joints = new GameObject[0];
 		segments = 0;
+	}
+
+	private void UpdateCharacterRopes()
+	{
+		ClimbInput climb1 = climberOne.transform.root.GetComponent<ClimbInput>();
+		ClimbInput climb2 = climberTwo.transform.root.GetComponent<ClimbInput>();
+		if (climb1 != null)
+		{
+			climb1.maxPartnerDistance = RopeBetweenClimbers;
+		}
+		if (climb2 != null)
+		{
+			climb2.maxPartnerDistance = RopeBetweenClimbers;
+		}
 	}
 }
