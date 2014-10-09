@@ -9,6 +9,7 @@ public class Handhold : MonoBehaviour {
 	private GameObject leftHand;
 	private GameObject rightHand;
 	private Vector3 myPosition;
+	public bool stable = true;
 	public bool falling = false;
 	private float fallRate = 4.0f;
 	private float dislodge = 4.0f;
@@ -111,7 +112,7 @@ public class Handhold : MonoBehaviour {
 				break;
 		}
 
-		if(leftHand.transform.position == myPosition || rightHand.transform.position == myPosition)
+		if(!stable && (leftHand.transform.position == myPosition || rightHand.transform.position == myPosition))
 		{
 			//print ("held");
 			Invoke("AboutToFall",dislodge);

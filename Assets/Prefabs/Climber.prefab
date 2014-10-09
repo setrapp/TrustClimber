@@ -312,6 +312,10 @@ MonoBehaviour:
   highlightHandColor: {r: .944827557, g: 0, b: 1, a: 0}
   maxPartnerDistance: 10
   moveUp: 0
+  leftHang: {x: 0, y: 0, z: 0}
+  rightHang: {x: 0, y: 0, z: 0}
+  lHandHanging: 0
+  rHandHanging: 0
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

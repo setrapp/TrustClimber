@@ -265,9 +265,65 @@ Prefab:
       propertyPath: m_Name
       value: Handhold S
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
+      propertyPath: stable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
   m_RootGameObject: {fileID: 635317689}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
+--- !u!1001 &26848164
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: climber1
+      value: 
+      objectReference: {fileID: 382842856}
+    - target: {fileID: 11400002, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: climber2
+      value: 
+      objectReference: {fileID: 624704729}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+  m_RootGameObject: {fileID: 1826754095}
   m_IsPrefabParent: 0
   m_IsExploded: 1
 --- !u!1 &38068049
@@ -316,6 +372,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 708119108}
+  stable: 1
+  falling: 0
 --- !u!23 &38068052
 Renderer:
   m_ObjectHideFlags: 0
@@ -404,6 +462,10 @@ Prefab:
     - target: {fileID: 100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
       propertyPath: m_Name
       value: Handhold S
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
+      propertyPath: stable
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
@@ -724,6 +786,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 1274622171}
+  stable: 1
+  falling: 0
 --- !u!23 &88438006
 Renderer:
   m_ObjectHideFlags: 0
@@ -884,6 +948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 990146605}
+  stable: 0
+  falling: 0
 --- !u!23 &95530620
 Renderer:
   m_ObjectHideFlags: 0
@@ -972,6 +1038,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 68600456}
+  stable: 1
+  falling: 0
 --- !u!23 &100232489
 Renderer:
   m_ObjectHideFlags: 0
@@ -1164,6 +1232,10 @@ Prefab:
     - target: {fileID: 100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
       propertyPath: m_Name
       value: Handhold W
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
+      propertyPath: stable
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
@@ -1536,6 +1608,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 1801746071}
+  stable: 1
+  falling: 0
 --- !u!23 &209279196
 Renderer:
   m_ObjectHideFlags: 0
@@ -1904,6 +1978,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 2119842613}
+  stable: 0
+  falling: 0
 --- !u!23 &369750344
 Renderer:
   m_ObjectHideFlags: 0
@@ -2046,6 +2122,10 @@ MonoBehaviour:
   highlightHandColor: {r: .944827557, g: 0, b: 1, a: 0}
   maxPartnerDistance: 10
   moveUp: 0
+  leftHang: {x: 0, y: 0, z: 0}
+  rightHang: {x: 0, y: 0, z: 0}
+  lHandHanging: 0
+  rHandHanging: 0
 --- !u!1 &382884126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,6 +2523,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 6512010}
+  stable: 1
+  falling: 0
 --- !u!23 &452580941
 Renderer:
   m_ObjectHideFlags: 0
@@ -2531,6 +2613,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 190483163}
+  stable: 1
+  falling: 0
 --- !u!23 &459953102
 Renderer:
   m_ObjectHideFlags: 0
@@ -2619,6 +2703,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 451133139}
+  stable: 1
+  falling: 0
 --- !u!23 &495876600
 Renderer:
   m_ObjectHideFlags: 0
@@ -2759,6 +2845,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 1696906678}
+  stable: 1
+  falling: 0
 --- !u!23 &504309752
 Renderer:
   m_ObjectHideFlags: 0
@@ -2899,6 +2987,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 1250074502}
+  stable: 1
+  falling: 0
 --- !u!23 &537216428
 Renderer:
   m_ObjectHideFlags: 0
@@ -2987,6 +3077,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 1268695737}
+  stable: 1
+  falling: 0
 --- !u!23 &548965426
 Renderer:
   m_ObjectHideFlags: 0
@@ -3127,6 +3219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 2128518355}
+  stable: 1
+  falling: 0
 --- !u!23 &566575692
 Renderer:
   m_ObjectHideFlags: 0
@@ -3215,6 +3309,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 1232103112}
+  stable: 1
+  falling: 0
 --- !u!23 &568967999
 Renderer:
   m_ObjectHideFlags: 0
@@ -3303,6 +3399,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 809402772}
+  stable: 1
+  falling: 0
 --- !u!23 &569201944
 Renderer:
   m_ObjectHideFlags: 0
@@ -3475,6 +3573,10 @@ MonoBehaviour:
   highlightHandColor: {r: .944827557, g: 0, b: 1, a: 0}
   maxPartnerDistance: 10
   moveUp: 0
+  leftHang: {x: 0, y: 0, z: 0}
+  rightHang: {x: 0, y: 0, z: 0}
+  lHandHanging: 0
+  rHandHanging: 0
 --- !u!23 &624704730
 Renderer:
   m_ObjectHideFlags: 0
@@ -3563,6 +3665,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 690749965}
+  stable: 0
+  falling: 0
 --- !u!23 &635317692
 Renderer:
   m_ObjectHideFlags: 0
@@ -3899,6 +4003,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 869760739}
+  stable: 1
+  falling: 0
 --- !u!23 &724256975
 Renderer:
   m_ObjectHideFlags: 0
@@ -3987,6 +4093,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 1654837390}
+  stable: 0
+  falling: 0
 --- !u!23 &745986034
 Renderer:
   m_ObjectHideFlags: 0
@@ -4075,6 +4183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 1022131212}
+  stable: 1
+  falling: 0
 --- !u!23 &759109140
 Renderer:
   m_ObjectHideFlags: 0
@@ -4247,6 +4357,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 1884886828}
+  stable: 0
+  falling: 0
 --- !u!23 &792749626
 Renderer:
   m_ObjectHideFlags: 0
@@ -4322,6 +4434,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 92732986}
+  stable: 1
+  falling: 0
 --- !u!23 &794225629
 Renderer:
   m_ObjectHideFlags: 0
@@ -4711,6 +4825,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 155552398}
+  stable: 1
+  falling: 0
 --- !u!23 &870132268
 Renderer:
   m_ObjectHideFlags: 0
@@ -4996,6 +5112,10 @@ Prefab:
       propertyPath: m_Name
       value: Handhold A
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
+      propertyPath: stable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
   m_RootGameObject: {fileID: 1828883460}
@@ -5099,6 +5219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 1723145394}
+  stable: 1
+  falling: 0
 --- !u!23 &927155269
 Renderer:
   m_ObjectHideFlags: 0
@@ -5174,6 +5296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 1146946313}
+  stable: 1
+  falling: 0
 --- !u!23 &945788073
 Renderer:
   m_ObjectHideFlags: 0
@@ -5483,6 +5607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 1753278846}
+  stable: 1
+  falling: 0
 --- !u!23 &997551059
 Renderer:
   m_ObjectHideFlags: 0
@@ -5571,6 +5697,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 1268396887}
+  stable: 1
+  falling: 0
 --- !u!23 &1001095794
 Renderer:
   m_ObjectHideFlags: 0
@@ -5804,6 +5932,10 @@ Prefab:
       propertyPath: m_Name
       value: Handhold S
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
+      propertyPath: stable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
   m_RootGameObject: {fileID: 1503205176}
@@ -5855,6 +5987,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 2075888621}
+  stable: 1
+  falling: 0
 --- !u!23 &1091704509
 Renderer:
   m_ObjectHideFlags: 0
@@ -6283,6 +6417,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 1681059491}
+  stable: 1
+  falling: 0
 --- !u!23 &1147229984
 Renderer:
   m_ObjectHideFlags: 0
@@ -6423,6 +6559,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 1876041941}
+  stable: 1
+  falling: 0
 --- !u!23 &1194967454
 Renderer:
   m_ObjectHideFlags: 0
@@ -6511,6 +6649,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 1054735197}
+  stable: 1
+  falling: 0
 --- !u!23 &1197172297
 Renderer:
   m_ObjectHideFlags: 0
@@ -6599,6 +6739,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 876029284}
+  stable: 1
+  falling: 0
 --- !u!23 &1204178460
 Renderer:
   m_ObjectHideFlags: 0
@@ -6759,6 +6901,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 1998190893}
+  stable: 0
+  falling: 0
 --- !u!23 &1243360247
 Renderer:
   m_ObjectHideFlags: 0
@@ -7187,6 +7331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 1740403193}
+  stable: 1
+  falling: 0
 --- !u!23 &1289244223
 Renderer:
   m_ObjectHideFlags: 0
@@ -7503,6 +7649,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 7880610}
+  stable: 1
+  falling: 0
 --- !u!23 &1393309452
 Renderer:
   m_ObjectHideFlags: 0
@@ -7716,6 +7864,10 @@ Prefab:
       propertyPath: m_Name
       value: Handhold A
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
+      propertyPath: stable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
   m_RootGameObject: {fileID: 745986031}
@@ -7871,6 +8023,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 1652551909}
+  stable: 1
+  falling: 0
 --- !u!23 &1467560211
 Renderer:
   m_ObjectHideFlags: 0
@@ -8063,6 +8217,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 835338042}
+  stable: 0
+  falling: 0
 --- !u!23 &1503205179
 Renderer:
   m_ObjectHideFlags: 0
@@ -8204,6 +8360,10 @@ Prefab:
       propertyPath: m_Name
       value: Handhold D
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
+      propertyPath: stable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
   m_RootGameObject: {fileID: 1243360244}
@@ -8255,6 +8415,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 153558165}
+  stable: 1
+  falling: 0
 --- !u!23 &1549582129
 Renderer:
   m_ObjectHideFlags: 0
@@ -8415,6 +8577,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 1951153579}
+  stable: 1
+  falling: 0
 --- !u!23 &1598772810
 Renderer:
   m_ObjectHideFlags: 0
@@ -8503,6 +8667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 876002969}
+  stable: 1
+  falling: 0
 --- !u!23 &1612288383
 Renderer:
   m_ObjectHideFlags: 0
@@ -8737,6 +8903,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 382884128}
+  stable: 1
+  falling: 0
 --- !u!1001 &1645559156
 Prefab:
   m_ObjectHideFlags: 0
@@ -8983,50 +9151,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
   m_RootGameObject: {fileID: 1963137006}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
---- !u!1001 &1663435361
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-  m_RootGameObject: {fileID: 1826754095}
   m_IsPrefabParent: 0
   m_IsExploded: 1
 --- !u!1 &1681059489
@@ -9611,6 +9735,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 51220565}
+  stable: 1
+  falling: 0
 --- !u!23 &1785227745
 Renderer:
   m_ObjectHideFlags: 0
@@ -9885,7 +10011,7 @@ Prefab:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-  m_PrefabInternal: {fileID: 1663435361}
+  m_PrefabInternal: {fileID: 26848164}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1826754096}
@@ -9902,7 +10028,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
-  m_PrefabInternal: {fileID: 1663435361}
+  m_PrefabInternal: {fileID: 26848164}
   m_GameObject: {fileID: 1826754095}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -9915,7 +10041,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: 90d70b6feea0435469317f7c98f95aab,
     type: 2}
-  m_PrefabInternal: {fileID: 1663435361}
+  m_PrefabInternal: {fileID: 26848164}
   m_GameObject: {fileID: 1826754095}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -9925,8 +10051,9 @@ MonoBehaviour:
 --- !u!114 &1826754098
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11400002, guid: 90d70b6feea0435469317f7c98f95aab,
+    type: 2}
+  m_PrefabInternal: {fileID: 26848164}
   m_GameObject: {fileID: 1826754095}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -9981,6 +10108,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 411586189}
+  stable: 0
+  falling: 0
 --- !u!23 &1828883463
 Renderer:
   m_ObjectHideFlags: 0
@@ -10069,6 +10198,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 2043329015}
+  stable: 1
+  falling: 0
 --- !u!23 &1869085875
 Renderer:
   m_ObjectHideFlags: 0
@@ -10301,6 +10432,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 73159286}
+  stable: 1
+  falling: 0
 --- !u!23 &1898703784
 Renderer:
   m_ObjectHideFlags: 0
@@ -10517,6 +10650,10 @@ Prefab:
       propertyPath: m_Name
       value: Handhold W
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
+      propertyPath: stable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94dd3ac8aa7d0e640927099dae9c7960, type: 2}
   m_RootGameObject: {fileID: 95530617}
@@ -10640,6 +10777,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 2
   idText: {fileID: 1419735921}
+  stable: 1
+  falling: 0
 --- !u!23 &1963137009
 Renderer:
   m_ObjectHideFlags: 0
@@ -10728,6 +10867,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 1
   idText: {fileID: 2062234804}
+  stable: 1
+  falling: 0
 --- !u!23 &1994007388
 Renderer:
   m_ObjectHideFlags: 0
@@ -10888,6 +11029,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 3
   idText: {fileID: 1129570829}
+  stable: 1
+  falling: 0
 --- !u!23 &2009803465
 Renderer:
   m_ObjectHideFlags: 0
@@ -11080,6 +11223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   idText: {fileID: 1692017588}
+  stable: 1
+  falling: 0
 --- !u!23 &2027536502
 Renderer:
   m_ObjectHideFlags: 0

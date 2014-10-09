@@ -46,7 +46,10 @@ public class ClimberManager : MonoBehaviour {
 
 	void OnDrawGizmos()
 	{
-		Gizmos.color = Color.black;
-		Gizmos.DrawLine(climber1.transform.position, climber2.transform.position);
+		if (climber1 != null && climber2 != null)
+		{
+			Gizmos.color = Color.black;
+			Gizmos.DrawLine(climber1.transform.position, climber2.transform.position);
+		}
 	}
 }

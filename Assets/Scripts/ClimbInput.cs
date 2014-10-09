@@ -103,6 +103,7 @@ public class ClimbInput : MonoBehaviour {
 		if(lHandHanging && rHandHanging)
 		{
 			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
+			MoveBodyBetweenHands();
 		}
 	}// End of Update
 
@@ -134,6 +135,16 @@ public class ClimbInput : MonoBehaviour {
 		}
 		leftHand.transform.position -= (newPosition - transform.position);
 		rightHand.transform.position -= (newPosition - transform.position);
+		if (lHandHanging && leftHand.transform.position.y < transform.position.y && (leftHand.transform.position - transform.position).sqrMagnitude >= Mathf.Pow(maxArmDistance / 4, 2))
+		{
+			Vector3 toHand = (leftHand.transform.position - transform.position).normalized;
+			leftHand.transform.position = transform.position + (toHand * maxArmDistance / 4);
+		}
+		if (rHandHanging && rightHand.transform.position.y < transform.position.y && (rightHand.transform.position - transform.position).sqrMagnitude >= Mathf.Pow(maxArmDistance / 4, 2))
+		{
+			Vector3 toHand = (rightHand.transform.position - transform.position).normalized;
+			rightHand.transform.position = transform.position + (toHand * maxArmDistance / 4);
+		}
 		transform.position = newPosition;
 	}
 
