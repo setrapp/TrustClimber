@@ -85,13 +85,6 @@ public class ClimbInput : MonoBehaviour {
 				MoveBodyBetweenHands();
 			}
 		}
-		else
-		{
-			if (leftHand.renderer.material.color != normalHandColor || rightHand.renderer.material.color != normalHandColor)
-			{
-				
-			}
-		}
 	}
 
 	private void ResetHandColors()

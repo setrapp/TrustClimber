@@ -49,9 +49,4 @@ public class ClimberManager : MonoBehaviour {
 		Gizmos.color = Color.black;
 		Gizmos.DrawLine(climber1.transform.position, climber2.transform.position);
 	}
-
-	public void ShowNearestHandholds(ClimbInput climber)
-	{
-		//Handhold top = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top,;
-	}
 }
