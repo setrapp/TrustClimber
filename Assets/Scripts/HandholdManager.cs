@@ -25,7 +25,7 @@ public class HandholdManager : MonoBehaviour {
 			Handhold handhold = handholds[i].GetComponent<Handhold>();
 			float sqrDist = (handholds[i].transform.position - fromPosition).sqrMagnitude;
 			bool correctDirection = (moveUp && handhold.transform.position.y >= extremeY) || (!moveUp && handhold.transform.position.y <= extremeY);
-			if ((handhold != null && handhold.buttonType == buttonType && correctDirection) && (nearHandhold == null || sqrDist < minSqrDist))
+			if ((handhold != null && handhold.buttonType == buttonType && correctDirection) && (nearHandhold == null || sqrDist < minSqrDist) && (handhold.isHeld != true))
 			{
 				nearHandhold = handhold;
 				minSqrDist = sqrDist;
@@ -35,3 +35,4 @@ public class HandholdManager : MonoBehaviour {
 		return nearHandhold;
 	}
 }
+        
