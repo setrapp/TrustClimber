@@ -46,7 +46,7 @@ public class Handhold : MonoBehaviour {
 				}
 				else
 				{
-					idText.text = "w";
+					idText.text = "W";
 					if (HandholdManager.Instance.NearestHandhold(ButtonType.Top, climber.handPos, climber.transform.position.y, climber.moveUp) == this && (transform.position - climber.transform.position).sqrMagnitude <= Mathf.Pow(climber.maxArmDistance, 2))
 						renderer.material.color = Color.yellow;
 					else
@@ -65,7 +65,7 @@ public class Handhold : MonoBehaviour {
 				}
 				else
 				{
-					idText.text = "d";
+					idText.text = "D";
 					if (HandholdManager.Instance.NearestHandhold(ButtonType.Right, climber.handPos, climber.transform.position.y, climber.moveUp) == this && (transform.position - climber.transform.position).sqrMagnitude <= Mathf.Pow(climber.maxArmDistance, 2))
 						renderer.material.color = Color.red;
 					else
@@ -84,7 +84,7 @@ public class Handhold : MonoBehaviour {
 				}
 				else
 				{
-					idText.text = "s";
+					idText.text = "S";
 					if (HandholdManager.Instance.NearestHandhold(ButtonType.Bottom, climber.handPos, climber.transform.position.y, climber.moveUp) == this && (transform.position - climber.transform.position).sqrMagnitude <= Mathf.Pow(climber.maxArmDistance, 2))
 						renderer.material.color = Color.green;
 					else
@@ -103,9 +103,12 @@ public class Handhold : MonoBehaviour {
 				}
 				else
 				{
-					idText.text = "a";
+					idText.text = "A";
 					if (HandholdManager.Instance.NearestHandhold(ButtonType.Left, climber.handPos, climber.transform.position.y, climber.moveUp) == this && (transform.position - climber.transform.position).sqrMagnitude <= Mathf.Pow(climber.maxArmDistance, 2))
+					{
 						renderer.material.color = Color.blue;
+						idText.color = Color.white;
+					}
 					else
 						renderer.material.color = Color.white;
 				}
