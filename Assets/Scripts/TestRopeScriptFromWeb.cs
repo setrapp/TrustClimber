@@ -62,7 +62,8 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 	{
 		get
 		{
-			float distance = ((segments - 1) - segmentNumber) / resolution;
+			int connectedSegments = (segments - 1) - segmentNumber;
+			float distance = (connectedSegments / resolution) + (connectedSegments * sjDistance);
 			return distance;
 		}
 	}
@@ -74,6 +75,7 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		transform.position = climberTwo.transform.position;
 		target = climberOne.transform;
 		BuildRope();
+		UpdateCharacterRopes();
 
 		if (currentBelayer.GetComponent<HingeJoint2D>() == null)
 		{
@@ -142,6 +144,8 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 			}
 
 		}
+
+		UpdateCharacterRopes();
 
 	}
 
@@ -274,5 +278,19 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		segmentPos = new Vector3[0];
 		joints = new GameObject[0];
 		segments = 0;
+	}
+
+	private void UpdateCharacterRopes()
+	{
+		ClimbInput climb1 = climberOne.transform.root.GetComponent<ClimbInput>();
+		ClimbInput climb2 = climberTwo.transform.root.GetComponent<ClimbInput>();
+		if (climb1 != null)
+		{
+			climb1.maxPartnerDistance = RopeBetweenClimbers;
+		}
+		if (climb2 != null)
+		{
+			climb2.maxPartnerDistance = RopeBetweenClimbers;
+		}
 	}
 }

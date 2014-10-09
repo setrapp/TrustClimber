@@ -2048,7 +2048,7 @@ Transform:
   m_PrefabInternal: {fileID: 418942499}
   m_GameObject: {fileID: 382842851}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -8.03890038, z: 0}
+  m_LocalPosition: {x: 0, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 961568823}
@@ -2347,7 +2347,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -8.03890038
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2952,7 +2952,7 @@ GameObject:
   - 4: {fileID: 524771712}
   - 50: {fileID: 524771713}
   m_Layer: 0
-  m_Name: RopeAnchor
+  m_Name: RopeAnchors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3585,7 +3585,7 @@ Transform:
   m_PrefabInternal: {fileID: 984867232}
   m_GameObject: {fileID: 624704727}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .691250026, y: -2.48329997, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 338244361}
@@ -5479,11 +5479,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .691250026
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.48329997
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.z
