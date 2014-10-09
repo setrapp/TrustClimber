@@ -14,9 +14,14 @@ public class Handhold : MonoBehaviour {
 	private float dislodge = 4.0f;
 
 	void Start(){
-		rightHand = ClimberManager.Instance.CurrentClimber.GetComponent<ClimbInput>().rightHand;
-		leftHand = ClimberManager.Instance.CurrentClimber.GetComponent<ClimbInput>().leftHand;
+<<<<<<< HEAD
+		player = GameObject.FindGameObjectWithTag("Player");
+		rightHand = player.GetComponent<ClimbInput>().rightHand;
+		leftHand = player.GetComponent<ClimbInput>().leftHand;
+		climb = player.GetComponent<ClimbInput>();
 		myPosition = transform.position;
+=======
+>>>>>>> c8fa71c65759a9735bd9596b4c2cf75cbc7f141f
 	}
 
 	public enum ButtonType
@@ -121,11 +126,11 @@ public class Handhold : MonoBehaviour {
 		{
 			if(leftHand.transform.position == myPosition)
 			{
-				ClimberManager.Instance.CurrentClimber.SendMessage("SlipLeft",SendMessageOptions.DontRequireReceiver);
+				player.SendMessage("SlipLeft",SendMessageOptions.DontRequireReceiver);
 			}
 			else if (rightHand.transform.position == myPosition)
 			{
-				ClimberManager.Instance.CurrentClimber.SendMessage("SlipRight",SendMessageOptions.DontRequireReceiver);
+				player.SendMessage("SlipRight",SendMessageOptions.DontRequireReceiver);
 			}
 			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
 		}

@@ -99,12 +99,23 @@ public class ClimbInput : MonoBehaviour {
 				MoveBodyBetweenHands();
 			}
 		}
+<<<<<<< HEAD
+		else
+		{
+			if (leftHand.renderer.material.color != normalHandColor || rightHand.renderer.material.color != normalHandColor)
+			{
+				
+			}
+		}
 
 		if(lHandHanging && rHandHanging)
 		{
 			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
 		}
 	}// End of Update
+=======
+	}
+>>>>>>> c8fa71c65759a9735bd9596b4c2cf75cbc7f141f
 
 	private void ResetHandColors()
 	{
