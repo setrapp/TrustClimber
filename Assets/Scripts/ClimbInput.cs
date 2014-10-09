@@ -8,7 +8,10 @@ public class ClimbInput : MonoBehaviour {
 	public GameObject rightHand;
 	private bool movingLeftHand = true;
 	public float bodyBelowHands;
+	[HideInInspector]
 	public float maxArmDistance;
+	public float taughtRopeReach;
+	public float slackRopeReach;
 	public Vector3 handPos;
 	public Color normalHandColor;
 	public Color highlightHandColor;
@@ -21,6 +24,7 @@ public class ClimbInput : MonoBehaviour {
 	public bool lHandHanging = false;
 	public bool rHandHanging = false;
 	private float fallRate = 4.0f;
+	public bool canPullUp;
 
 	void Awake()
 	{
@@ -35,6 +39,17 @@ public class ClimbInput : MonoBehaviour {
 
 	void Update()
 	{
+		if (!ClimberManager.Instance.rope.IsTaught)
+		{
+			
+			maxArmDistance = slackRopeReach;
+			
+		}
+		else
+		{
+			maxArmDistance = taughtRopeReach;
+		}
+
 		if (Input.GetButtonDown("Switch Climber"))
 		{
 			isClimbing = !isClimbing;
@@ -130,8 +145,19 @@ public class ClimbInput : MonoBehaviour {
 		newPosition.y -= bodyBelowHands;
 		if (partner != null && (newPosition - partner.transform.position).sqrMagnitude > Mathf.Pow(maxPartnerDistance, 2))
 		{
-			Vector3 fromPartner = (newPosition - partner.transform.position).normalized;
-			newPosition = partner.transform.position + (fromPartner * maxPartnerDistance);
+			if (!ClimberManager.Instance.rope.ropeLost)
+			{
+				if (Input.GetAxis("Braking") > .5)
+				{
+					Vector3 fromPartner = (newPosition - partner.transform.position).normalized;
+					newPosition = partner.transform.position + (fromPartner * maxPartnerDistance);
+				}
+				else
+				{
+					if (!ClimberManager.Instance.rope.RopeOut())
+						ClimberManager.Instance.rope.LoseRope();
+				}
+			}
 		}
 		leftHand.transform.position -= (newPosition - transform.position);
 		rightHand.transform.position -= (newPosition - transform.position);

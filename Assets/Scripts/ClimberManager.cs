@@ -39,6 +39,8 @@ public class ClimberManager : MonoBehaviour {
 		}
 	}
 
+	public TestRopeScriptFromWeb rope;
+
 	void Update()
 	{
 
@@ -46,10 +48,11 @@ public class ClimberManager : MonoBehaviour {
 
 	void OnDrawGizmos()
 	{
-		if (climber1 != null && climber2 != null)
+	/*	if (climber1 != null && climber2 != null)
 		{
 			Gizmos.color = Color.black;
 			Gizmos.DrawLine(climber1.transform.position, climber2.transform.position);
 		}
+	*/
 	}
 }
