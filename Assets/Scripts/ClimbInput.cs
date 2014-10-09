@@ -7,6 +7,7 @@ public class ClimbInput : MonoBehaviour {
 	private bool movingLeftHand = true;
 	private float bodyBelowHands;
 	public float maxArmDistance;
+	public Vector3 handPos;
 
 	void Awake()
 	{
@@ -16,7 +17,7 @@ public class ClimbInput : MonoBehaviour {
 	void Update()
 	{
 		Handhold nextHandhold = null;
-		Vector3 handPos = leftHand.transform.position;
+		handPos = leftHand.transform.position;
 		if (!movingLeftHand)
 		{
 			handPos = rightHand.transform.position;
