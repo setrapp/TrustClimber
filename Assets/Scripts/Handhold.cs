@@ -15,8 +15,6 @@ public class Handhold : MonoBehaviour {
 	private float dislodge = 4.0f;
 
 	void Start(){
-		rightHand = ClimberManager.Instance.CurrentClimber.GetComponent<ClimbInput>().rightHand;
-		leftHand = ClimberManager.Instance.CurrentClimber.GetComponent<ClimbInput>().leftHand;
 		myPosition = transform.position;
 	}
 
@@ -31,6 +29,8 @@ public class Handhold : MonoBehaviour {
 	void Update()
 	{
 		ClimbInput climber = ClimberManager.Instance.CurrentClimber;
+		rightHand = climber.rightHand;
+		leftHand = climber.leftHand;
 
 		switch(buttonType)
 		{
