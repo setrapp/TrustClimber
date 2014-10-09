@@ -321,6 +321,10 @@ Prefab:
       propertyPath: climber2
       value: 
       objectReference: {fileID: 624704729}
+    - target: {fileID: 11400002, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
+      propertyPath: rope
+      value: 
+      objectReference: {fileID: 1437198868}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90d70b6feea0435469317f7c98f95aab, type: 2}
   m_RootGameObject: {fileID: 1826754095}
@@ -2048,7 +2052,7 @@ Transform:
   m_PrefabInternal: {fileID: 418942499}
   m_GameObject: {fileID: 382842851}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -8.03890038, z: 0}
+  m_LocalPosition: {x: 0, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 961568823}
@@ -2117,7 +2121,9 @@ MonoBehaviour:
   leftHand: {fileID: 961568822}
   rightHand: {fileID: 1299095223}
   bodyBelowHands: 1
-  maxArmDistance: 3
+  maxArmDistance: 0
+  taughtRopeReach: 5
+  slackRopeReach: 3
   handPos: {x: 0, y: 0, z: 0}
   normalHandColor: {r: 1, g: 1, b: 1, a: 0}
   highlightHandColor: {r: .944827557, g: 0, b: 1, a: 0}
@@ -2127,6 +2133,7 @@ MonoBehaviour:
   rightHang: {x: 0, y: 0, z: 0}
   lHandHanging: 0
   rHandHanging: 0
+  canPullUp: 0
 --- !u!1 &382884126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2347,7 +2354,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -8.03890038
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2952,7 +2959,7 @@ GameObject:
   - 4: {fileID: 524771712}
   - 50: {fileID: 524771713}
   m_Layer: 0
-  m_Name: RopeAnchor
+  m_Name: RopeAnchors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3585,7 +3592,7 @@ Transform:
   m_PrefabInternal: {fileID: 984867232}
   m_GameObject: {fileID: 624704727}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .691250026, y: -2.48329997, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 338244361}
@@ -3612,7 +3619,9 @@ MonoBehaviour:
   leftHand: {fileID: 338244360}
   rightHand: {fileID: 1101383394}
   bodyBelowHands: 1
-  maxArmDistance: 3
+  maxArmDistance: 0
+  taughtRopeReach: 5
+  slackRopeReach: 3
   handPos: {x: 0, y: 0, z: 0}
   normalHandColor: {r: 1, g: 1, b: 1, a: 0}
   highlightHandColor: {r: .944827557, g: 0, b: 1, a: 0}
@@ -3622,6 +3631,7 @@ MonoBehaviour:
   rightHang: {x: 0, y: 0, z: 0}
   lHandHanging: 0
   rHandHanging: 0
+  canPullUp: 0
 --- !u!23 &624704730
 Renderer:
   m_ObjectHideFlags: 0
@@ -5479,11 +5489,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .691250026
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.48329997
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: a36f8e0bb01bd754392ed49abbcafbd5, type: 2}
       propertyPath: m_LocalPosition.z
@@ -7899,6 +7909,7 @@ MonoBehaviour:
   sjDistance: 1
   sjDamping: 2
   sjFrequency: 0
+  ropeLost: 0
 --- !u!120 &1437198869
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -10204,6 +10215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   climber1: {fileID: 382842856}
   climber2: {fileID: 624704729}
+  rope: {fileID: 1437198868}
 --- !u!1 &1828883460
 GameObject:
   m_ObjectHideFlags: 0

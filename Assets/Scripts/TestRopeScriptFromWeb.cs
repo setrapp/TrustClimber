@@ -57,14 +57,25 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 	private GameObject currentBelayer;
 
 	private int segmentNumber = 0;
-
+	public bool ropeLost = false;
 	public float RopeBetweenClimbers
 	{
 		get
 		{
-			float distance = ((segments - 1) - segmentNumber) / resolution;
+			int connectedSegments = (segments - 1) - segmentNumber;
+			float distance = (connectedSegments / resolution) + (connectedSegments * sjDistance);
 			return distance;
 		}
+	}
+
+	public bool IsTaught
+	{
+		get { return RopeBetweenClimbers < Vector3.Distance(ClimberManager.Instance.climber1.transform.position, ClimberManager.Instance.climber2.transform.position); }
+	}
+
+	public bool CanPullUp
+	{
+		get { return !IsTaught && !(ClimberManager.Instance.CurrentClimber.lHandHanging && ClimberManager.Instance.CurrentClimber.rHandHanging); }
 	}
 	
 	void Awake()
@@ -74,6 +85,7 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		transform.position = climberTwo.transform.position;
 		target = climberOne.transform;
 		BuildRope();
+		UpdateCharacterRopes();
 
 		if (currentBelayer.GetComponent<HingeJoint2D>() == null)
 		{
@@ -84,95 +96,115 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 	
 	void Update()
 	{
-		if(Input.GetButtonDown("RopeIn"))
+		if (!ropeLost)
 		{
-			if(Input.GetJoystickNames().Length > 0)
+			if (Input.GetButtonDown("RopeIn"))
 			{
-				if (Input.GetAxis("Belay") > .5f)
+				if (Input.GetJoystickNames().Length > 0)
+				{
+					if (Input.GetAxis("Belay") > .5f)
+						RopeIn();
+				}
+				else
 					RopeIn();
 			}
-			else
-				RopeIn();
-		}
-			
 
-		if(Input.GetButtonDown("RopeOut"))
-		{
-			if (Input.GetJoystickNames().Length > 0)
+
+			if (Input.GetButtonDown("RopeOut"))
 			{
-				if (Input.GetAxis("Belay") < -.5f)
+				if (Input.GetJoystickNames().Length > 0)
+				{
+					if (Input.GetAxis("Belay") < -.5f)
+						RopeOut();
+				}
+				else
 					RopeOut();
 			}
-			else
-				RopeOut();
-		}
 
-		if (Input.GetButtonDown("Switch Climber"))
-		{
-			//Debug.Log(joints.Length);
-			if (currentClimber == climberOne)
+			if (Input.GetButtonDown("Switch Climber"))
 			{
-				Destroy(climberTwo.GetComponent<HingeJoint2D>());
-				Destroy(climberOne.GetComponent<SpringJoint2D>());
-				HingeJoint2D belayerJoint = climberOne.AddComponent<HingeJoint2D>();
-				belayerJoint.connectedBody = segmentNumber != 0 ? joints[segmentNumber].rigidbody2D : gameObject.rigidbody2D;
-				target = climberTwo.transform;
-				SpringJoint2D end = target.gameObject.AddComponent<SpringJoint2D>();
-				end.connectedBody = joints[joints.Length-1].transform.rigidbody2D;
-				end.distance = sjDistance;
-				end.dampingRatio = sjDamping;
-				end.frequency = sjFrequency;
-				currentClimber = climberTwo;
-				currentBelayer = climberOne;
-			}
-			else
-			{
-				Destroy(climberOne.GetComponent<HingeJoint2D>());
-				Destroy(climberTwo.GetComponent<SpringJoint2D>());
-				HingeJoint2D belayerJoint = climberTwo.AddComponent<HingeJoint2D>();
-				belayerJoint.connectedBody = segmentNumber != 0 ? joints[segmentNumber].rigidbody2D : gameObject.rigidbody2D;
-				target = climberOne.transform;
-				SpringJoint2D end = target.gameObject.AddComponent<SpringJoint2D>();
-				end.connectedBody = joints[joints.Length - 1].transform.rigidbody2D;
-				end.distance = sjDistance;
-				end.dampingRatio = sjDamping;
-				end.frequency = sjFrequency;
-				currentClimber = climberOne;
-				currentBelayer = climberTwo;
+				//Debug.Log(joints.Length);
+				if (currentClimber == climberOne)
+				{
+					Destroy(climberTwo.GetComponent<HingeJoint2D>());
+					Destroy(climberOne.GetComponent<SpringJoint2D>());
+					HingeJoint2D belayerJoint = climberOne.AddComponent<HingeJoint2D>();
+					belayerJoint.connectedBody = segmentNumber != 0 ? joints[segmentNumber].rigidbody2D : gameObject.rigidbody2D;
+					target = climberTwo.transform;
+					SpringJoint2D end = target.gameObject.AddComponent<SpringJoint2D>();
+					end.connectedBody = joints[joints.Length - 1].transform.rigidbody2D;
+					end.distance = sjDistance;
+					end.dampingRatio = sjDamping;
+					end.frequency = sjFrequency;
+					currentClimber = climberTwo;
+					currentBelayer = climberOne;
+				}
+				else
+				{
+					Destroy(climberOne.GetComponent<HingeJoint2D>());
+					Destroy(climberTwo.GetComponent<SpringJoint2D>());
+					HingeJoint2D belayerJoint = climberTwo.AddComponent<HingeJoint2D>();
+					belayerJoint.connectedBody = segmentNumber != 0 ? joints[segmentNumber].rigidbody2D : gameObject.rigidbody2D;
+					target = climberOne.transform;
+					SpringJoint2D end = target.gameObject.AddComponent<SpringJoint2D>();
+					end.connectedBody = joints[joints.Length - 1].transform.rigidbody2D;
+					end.distance = sjDistance;
+					end.dampingRatio = sjDamping;
+					end.frequency = sjFrequency;
+					currentClimber = climberOne;
+					currentBelayer = climberTwo;
+				}
+
 			}
 
+			UpdateCharacterRopes();
 		}
 
 	}
 
-	void RopeIn()
+	public bool RopeIn()
 	{
-		if (segmentNumber == 0)
+		if (CanPullUp)
 		{
-			currentBelayer.GetComponent<HingeJoint2D>().connectedBody = joints[1].rigidbody2D;
-			segmentNumber++;
-		}
-		else
-		{
-			if (segmentNumber < segments - 2)
+			if (segmentNumber == 0)
 			{
+				currentBelayer.GetComponent<HingeJoint2D>().connectedBody = joints[1].rigidbody2D;
 				segmentNumber++;
-				//Debug.Log(segmentNumber);
-				currentBelayer.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
 			}
+			else
+			{
+				if (segmentNumber < segments - 2)
+				{
+					segmentNumber++;
+					//Debug.Log(segmentNumber);
+					currentBelayer.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
+				}
+			}
+			return true;
 		}
+		return false;
 	}
 
-	void RopeOut()
+	public bool RopeOut()
 	{
-		if (segmentNumber > 0)
+		if (segmentNumber > 0 && Input.GetAxis("Braking") < .5)
 		{
 			segmentNumber--;
 			if (segmentNumber == 0)
 				currentBelayer.GetComponent<HingeJoint2D>().connectedBody = gameObject.rigidbody2D;
 			else
 				currentBelayer.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
+
+			return true;
 		}
+		else
+			return false;
+	}
+
+	public void LoseRope()
+	{
+		Destroy(currentBelayer.GetComponent<HingeJoint2D>());
+		ropeLost = true;
 	}
 
 	void LateUpdate()
@@ -274,5 +306,19 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		segmentPos = new Vector3[0];
 		joints = new GameObject[0];
 		segments = 0;
+	}
+
+	private void UpdateCharacterRopes()
+	{
+		ClimbInput climb1 = climberOne.transform.root.GetComponent<ClimbInput>();
+		ClimbInput climb2 = climberTwo.transform.root.GetComponent<ClimbInput>();
+		if (climb1 != null)
+		{
+			climb1.maxPartnerDistance = RopeBetweenClimbers;
+		}
+		if (climb2 != null)
+		{
+			climb2.maxPartnerDistance = RopeBetweenClimbers;
+		}
 	}
 }
