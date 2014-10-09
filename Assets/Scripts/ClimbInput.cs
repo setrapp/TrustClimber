@@ -9,9 +9,11 @@ public class ClimbInput : MonoBehaviour {
 	private bool movingLeftHand = true;
 	public float bodyBelowHands;
 	public float maxArmDistance;
+	public Vector3 handPos;
 	public Color normalHandColor;
 	public Color highlightHandColor;
 	public float maxPartnerDistance;
+	public bool moveUp;
 
 	void Awake()
 	{
@@ -21,7 +23,7 @@ public class ClimbInput : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetButtonDown("Switch Climber"))
 		{
 			isClimbing = !isClimbing;
 			ResetHandColors();
@@ -34,14 +36,14 @@ public class ClimbInput : MonoBehaviour {
 
 		if (isClimbing)
 		{
-			bool moveUp = true;
-			if (Input.GetKey(KeyCode.LeftShift))
+			moveUp = true;
+			if (Input.GetAxis("Look Down") != 0)
 			{
 				moveUp = false;
 			}
 
 			Handhold nextHandhold = null;
-			Vector3 handPos = leftHand.transform.position;
+			handPos = leftHand.transform.position;
 			if (!movingLeftHand)
 			{
 				handPos = rightHand.transform.position;
@@ -113,7 +115,7 @@ public class ClimbInput : MonoBehaviour {
 	{
 		Vector3 newPosition = (leftHand.transform.position + rightHand.transform.position) / 2;
 		newPosition.y -= bodyBelowHands;
-		if ((newPosition - partner.transform.position).sqrMagnitude > Mathf.Pow(maxPartnerDistance, 2))
+		if (partner != null && (newPosition - partner.transform.position).sqrMagnitude > Mathf.Pow(maxPartnerDistance, 2))
 		{
 			Vector3 fromPartner = (newPosition - partner.transform.position).normalized;
 			newPosition = partner.transform.position + (fromPartner * maxPartnerDistance);

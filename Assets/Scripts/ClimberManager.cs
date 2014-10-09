@@ -16,6 +16,28 @@ public class ClimberManager : MonoBehaviour {
 	}
 	public ClimbInput climber1;
 	public ClimbInput climber2;
+	public ClimbInput CurrentClimber
+	{
+		get
+		{
+			if (climber1.isClimbing)
+			{
+				return climber1;
+			}
+			return climber2;
+		}
+	}
+	public ClimbInput CurrentBelayer
+	{
+		get
+		{
+			if (!climber1.isClimbing)
+			{
+				return climber1;
+			}
+			return climber2;
+		}
+	}
 
 	void Update()
 	{
