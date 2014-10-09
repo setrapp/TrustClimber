@@ -39,6 +39,8 @@ public class ClimberManager : MonoBehaviour {
 		}
 	}
 
+	public TestRopeScriptFromWeb rope;
+
 	void Update()
 	{
 

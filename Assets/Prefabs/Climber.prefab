@@ -306,7 +306,9 @@ MonoBehaviour:
   leftHand: {fileID: 100006}
   rightHand: {fileID: 100004}
   bodyBelowHands: 1
-  maxArmDistance: 3
+  maxArmDistance: 0
+  taughtRopeReach: 5
+  slackRopeReach: 3
   handPos: {x: 0, y: 0, z: 0}
   normalHandColor: {r: 1, g: 1, b: 1, a: 0}
   highlightHandColor: {r: .944827557, g: 0, b: 1, a: 0}
