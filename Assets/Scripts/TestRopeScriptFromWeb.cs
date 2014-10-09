@@ -2,7 +2,7 @@
 using System.Collections;
 
 // Require a Rigidbody and LineRenderer object for easier assembly
-[RequireComponent (typeof (Rigidbody))]
+[RequireComponent (typeof (Rigidbody2D))]
 [RequireComponent (typeof (LineRenderer))]
 
 public class TestRopeScriptFromWeb : MonoBehaviour {
@@ -11,7 +11,8 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 	==  File: Rope.js					  ==
 	==  Original by: Jacob Fletcher		==
 	==  Use and alter Freely			 ==
-	==  CSharp Conversion by: Chelsea Hash  ==
+	==  CSharp Conversion by: Chelsea Hash
+	==  Alterations by: Ben Snyder
 	==========================================
 	How To Use:
 	 ( BASIC )
@@ -34,24 +35,25 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
  
  
 	*/
-	
+
+	public GameObject test;
 	public Transform target;
-	public float resolution = 0.5F;							  //  Sets the amount of joints there are in the rope (1 = 1 joint for every 1 unit)
+	public float resolution = 2F;							  //  Sets the amount of joints there are in the rope (1 = 1 joint for every 1 unit)
 	public float ropeDrag = 0.1F;								 //  Sets each joints Drag
-	public float ropeMass = 0.1F;							//  Sets each joints Mass
-	public float ropeColRadius = 0.5F;					//  Sets the radius of the collider in the SphereCollider component
-	//public float ropeBreakForce = 25.0F;					 //-------------- TODO (Hopefully will break the rope in half...
+	public float ropeMass = 1F;							//  Sets each joints Mass
+
+	public float sjDistance = 1f;
+	public float sjDamping = 2f;
+	public float sjFrequency = 0f;
+
 	private Vector3[] segmentPos;			//  DONT MESS!	This is for the Line Renderer's Reference and to set up the positions of the gameObjects
 	private GameObject[] joints;			//  DONT MESS!	This is the actual joint objects that will be automatically created
 	private LineRenderer line;							//  DONT MESS!	 The line renderer variable is set up when its assigned as a new component
 	private int segments = 0;					//  DONT MESS!	The number of segments is calculated based off of your distance * resolution
 	private bool rope = false;						 //  DONT MESS!	This is to keep errors out of your debug window! Keeps the rope from rendering when it doesnt exist...
-	
-	//Joint Settings
-	public Vector3 swingAxis = new Vector3(1,1,1);				 //  Sets which axis the character joint will swing on (1 axis is best for 2D, 2-3 axis is best for 3D (Default= 3 axis))
-	public float lowTwistLimit = -100.0F;					//  The lower limit around the primary axis of the character joint. 
-	public float highTwistLimit = 100.0F;					//  The upper limit around the primary axis of the character joint.
-	public float swing1Limit  = 20.0F;					//	The limit around the primary axis of the character joint starting at the initialization point.
+
+
+	private int segmentNumber = 0;
 	
 	void Awake()
 	{
@@ -60,26 +62,38 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 	
 	void Update()
 	{
-		// Put rope control here!
-		
-		
-		//Destroy Rope Test	(Example of how you can use the rope dynamically)
-		if(rope && Input.GetKeyDown("d"))
+		if(Input.GetButtonDown("RopeIn"))
 		{
-			DestroyRope();	
-		}	
-		if(!rope && Input.GetKeyDown("r"))
-		{
-			BuildRope();
+			if(segmentNumber == 0)
+			{
+				test.GetComponent<HingeJoint2D>().connectedBody = joints[1].rigidbody2D;
+				segmentNumber ++;
+			}
+			else
+			{
+				if(segmentNumber < segments -2)
+				{
+					segmentNumber++;
+					Debug.Log(segmentNumber);
+					test.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
+				}
+			}
 		}
 
-		if(Input.GetButtonDown("RopeIn") || Input.GetMouseButtonDown(1))
-		   {
-			DestroyRope();
-			BuildRope();
+		if(Input.GetButtonDown("RopeOut"))
+		{
+			if(segmentNumber > 0)
+			{
+				segmentNumber--;
+				if(segmentNumber == 0)
+					test.GetComponent<HingeJoint2D>().connectedBody = gameObject.rigidbody2D;
+				else
+					test.GetComponent<HingeJoint2D>().connectedBody = joints[segmentNumber].rigidbody2D;
+			}
 		}
 
 	}
+
 	void LateUpdate()
 	{
 		// Does rope exist? If so, update its position
@@ -112,6 +126,7 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		line.SetVertexCount(segments);
 		segmentPos = new Vector3[segments];
 		joints = new GameObject[segments];
+		Debug.Log(joints.Length);
 		segmentPos[0] = transform.position;
 		segmentPos[segments-1] = target.position;
 		
@@ -128,21 +143,12 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 			//Add Physics to the segments
 			AddJointPhysics(s);
 		}
-		
-		// Attach the joints to the target object and parent it to this object	
-		CharacterJoint end = target.gameObject.AddComponent<CharacterJoint>();
-		end.connectedBody = joints[joints.Length-1].transform.rigidbody;
-		end.swingAxis = swingAxis;
-		SoftJointLimit limit_setter = end.lowTwistLimit;
-		limit_setter.limit = lowTwistLimit;
-		end.lowTwistLimit = limit_setter;
-		limit_setter = end.highTwistLimit;
-		limit_setter.limit = highTwistLimit;
-		end.highTwistLimit = limit_setter;
-		limit_setter = end.swing1Limit;
-		limit_setter.limit = swing1Limit;
-		end.swing1Limit = limit_setter;
-		//target.parent = transform;
+
+		SpringJoint2D end = target.gameObject.AddComponent<SpringJoint2D>();
+		end.connectedBody = joints[joints.Length-1].transform.rigidbody2D;
+		end.distance = sjDistance;
+		end.dampingRatio = sjDamping;
+		end.frequency = sjFrequency;
 		
 		// Rope = true, The rope now exists in the scene!
 		rope = true;
@@ -152,33 +158,25 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 	{
 		joints[n] = new GameObject("Joint_" + n);
 		joints[n].transform.parent = transform;
-		Rigidbody rigid = joints[n].AddComponent<Rigidbody>();
-		//rigid.constraints = //RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezePositionZ;
-		SphereCollider col = joints[n].AddComponent<SphereCollider>();
-		CharacterJoint ph = joints[n].AddComponent<CharacterJoint>();
-		ph.swingAxis = swingAxis;
-		SoftJointLimit limit_setter = ph.lowTwistLimit;
-		limit_setter.limit = lowTwistLimit;
-		ph.lowTwistLimit = limit_setter;
-		limit_setter = ph.highTwistLimit;
-		limit_setter.limit = highTwistLimit;
-		ph.highTwistLimit = limit_setter;
-		limit_setter = ph.swing1Limit;
-		limit_setter.limit = swing1Limit;
-		ph.swing1Limit = limit_setter;
-		//ph.breakForce = ropeBreakForce; <--------------- TODO
+		Rigidbody2D rigid = joints[n].AddComponent<Rigidbody2D>();
+
+		SpringJoint2D sj = joints[n].AddComponent<SpringJoint2D>();
+
+		sj.collideConnected = false;
+		sj.distance = sjDistance;
+		sj.dampingRatio =sjDamping;
+		sj.frequency = sjFrequency;
 		
 		joints[n].transform.position = segmentPos[n];
-		
+
 		rigid.drag = ropeDrag;
 		rigid.mass = ropeMass;
-		col.radius = ropeColRadius;
 		
 		if(n==1){		
-			ph.connectedBody = transform.rigidbody;
+			sj.connectedBody = transform.rigidbody2D;
 		} else
 		{
-			ph.connectedBody = joints[n-1].rigidbody;	
+			sj.connectedBody = joints[n-1].rigidbody2D;
 		}
 		
 	}
@@ -191,7 +189,7 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		{
 			Destroy(joints[dj]);	
 		}
-		
+		Destroy(target.gameObject.GetComponent<SpringJoint2D>());
 		segmentPos = new Vector3[0];
 		joints = new GameObject[0];
 		segments = 0;
