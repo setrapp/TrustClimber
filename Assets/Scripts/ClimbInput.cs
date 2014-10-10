@@ -46,9 +46,11 @@ public class ClimbInput : MonoBehaviour {
 		rightHang = new Vector3(0.75f,-0.7f,0.0f);
 		leftVict = new Vector3(-0.75f,0.9f,0.0f);
 		rightVict = new Vector3(0.75f,0.9f,0.0f);
-		platformStand.y = platform.transform.position.y;
-		platformStand.y += 1.5f;
-
+		if (platform != null)
+		{
+			platformStand.y = platform.transform.position.y;
+			platformStand.y += 1.5f;
+		}
 	}
 	void Update()
 	{
@@ -91,19 +93,19 @@ public class ClimbInput : MonoBehaviour {
 
 			if (Input.GetButtonDown("Top"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top);
 			}
 			else if (Input.GetButtonDown("Left"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left);
 			}
 			else if (Input.GetButtonDown("Bottom"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom);
 			}
 			else if (Input.GetButtonDown("Right"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right);
 			}
 
 			if (nextHandhold != null && (nextHandhold.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(maxArmDistance, 2))
@@ -151,7 +153,7 @@ public class ClimbInput : MonoBehaviour {
 			onPlatform = false;
 		}
 
-		if(transform.position.y > platform.transform.position.y + 2.0f)
+		if(platform != null && transform.position.y > platform.transform.position.y + 2.0f)
 		{
 			//platform.collider.enabled = true;
 		}
@@ -182,7 +184,7 @@ public class ClimbInput : MonoBehaviour {
 		{
 			if (!ClimberManager.Instance.rope.ropeLost)
 			{
-				if (Input.GetAxis("Braking") > .5)
+				if (Input.GetAxis("Braking") > .5 || !(lHandHanging && rHandHanging))
 				{
 					Vector3 fromPartner = (newPosition - partner.transform.position).normalized;
 					newPosition = partner.transform.position + (fromPartner * maxPartnerDistance);

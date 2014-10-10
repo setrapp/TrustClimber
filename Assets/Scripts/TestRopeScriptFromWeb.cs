@@ -40,6 +40,7 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 	public GameObject climberTwo;
 	
 	private Transform target;
+	public float startingLength = 5F;					// Sets the starting length of the rope.
 	public float resolution = 2F;							  //  Sets the amount of joints there are in the rope (1 = 1 joint for every 1 unit)
 	public float ropeDrag = 0.1F;								 //  Sets each joints Drag
 	public float ropeMass = 1F;							//  Sets each joints Mass
@@ -235,7 +236,7 @@ public class TestRopeScriptFromWeb : MonoBehaviour {
 		
 		// Find the amount of segments based on the distance and resolution
 		// Example: [resolution of 1.0 = 1 joint per unit of distance]
-		segments = (int)(Vector3.Distance(transform.position,target.position)*resolution);
+		segments = (int)(startingLength*resolution);
 		line.SetVertexCount(segments);
 		segmentPos = new Vector3[segments];
 		joints = new GameObject[segments];
