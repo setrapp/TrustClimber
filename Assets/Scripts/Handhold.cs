@@ -125,6 +125,7 @@ public class Handhold : MonoBehaviour {
 		{
 			//print ("held");		
 			Invoke("AboutToFall",dislodge);
+			animation.Play();
 		}
 
 		if(bleftHand.transform.position == myPosition || brightHand.transform.position == myPosition)
