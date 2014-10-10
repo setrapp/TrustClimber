@@ -78,19 +78,19 @@ public class ClimbInput : MonoBehaviour {
 
 			if (Input.GetButtonDown("Top"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top);
 			}
 			else if (Input.GetButtonDown("Left"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left);
 			}
 			else if (Input.GetButtonDown("Bottom"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom);
 			}
 			else if (Input.GetButtonDown("Right"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right);
 			}
 
 			if (nextHandhold != null && (nextHandhold.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(maxArmDistance, 2))
@@ -147,7 +147,7 @@ public class ClimbInput : MonoBehaviour {
 		{
 			if (!ClimberManager.Instance.rope.ropeLost)
 			{
-				if (Input.GetAxis("Braking") > .5)
+				if (Input.GetAxis("Braking") > .5 || !(lHandHanging && rHandHanging))
 				{
 					Vector3 fromPartner = (newPosition - partner.transform.position).normalized;
 					newPosition = partner.transform.position + (fromPartner * maxPartnerDistance);
