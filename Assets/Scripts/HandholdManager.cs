@@ -15,22 +15,47 @@ public class HandholdManager : MonoBehaviour {
 		}
 	}
 
-	public Handhold NearestHandhold(Handhold.ButtonType buttonType, Vector3 fromPosition, float extremeY, bool moveUp)
+	private bool[] nearestValid = new bool[4];
+	private Handhold[] nearest = new Handhold[4];
+	GameObject[] handholds;
+
+	void Awake()
 	{
-		GameObject[] handholds = GameObject.FindGameObjectsWithTag("Handhold");
+		handholds = GameObject.FindGameObjectsWithTag("Handhold");
+	}
+
+	void Update()
+	{
+		for (int i = 0; i < nearestValid.Length; i++)
+		{
+			nearestValid[i] = false;
+		}
+	}
+
+	public Handhold NearestHandhold(Handhold.ButtonType buttonType)
+	{
+		if (nearestValid[(int)buttonType])
+		{
+			return nearest[(int)buttonType];
+		}
+
+		ClimbInput climber = ClimberManager.Instance.CurrentClimber;
 		Handhold nearHandhold = null;
-		float minSqrDist = 0;
+		float minSqrDist = climber.maxArmDistance;
 		for (int i = 0; i < handholds.Length; i++)
 		{
 			Handhold handhold = handholds[i].GetComponent<Handhold>();
-			float sqrDist = (handholds[i].transform.position - fromPosition).sqrMagnitude;
-			bool correctDirection = (moveUp && handhold.transform.position.y >= extremeY) || (!moveUp && handhold.transform.position.y <= extremeY);
+			float sqrDist = (handholds[i].transform.position - climber.handPos).sqrMagnitude;
+			bool correctDirection = (climber.moveUp && handhold.transform.position.y >= climber.transform.position.y) || (!climber.moveUp && handhold.transform.position.y <= climber.transform.position.y);
 			if ((handhold != null && handhold.buttonType == buttonType && correctDirection) && (nearHandhold == null || sqrDist < minSqrDist))
 			{
 				nearHandhold = handhold;
 				minSqrDist = sqrDist;
 			}
 		}
+
+		nearest[(int)buttonType] = nearHandhold;
+		nearestValid[(int)buttonType] = true;
 
 		return nearHandhold;
 	}
