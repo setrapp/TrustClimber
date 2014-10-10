@@ -145,6 +145,14 @@ public class Handhold : MonoBehaviour {
 			{
 				ClimberManager.Instance.CurrentClimber.SendMessage("SlipRight",SendMessageOptions.DontRequireReceiver);
 			}
+			if (bleftHand.transform.position == myPosition)
+			{
+				ClimberManager.Instance.CurrentBelayer.SendMessage("SlipLeft", SendMessageOptions.DontRequireReceiver);
+			}
+			else if (brightHand.transform.position == myPosition)
+			{
+				ClimberManager.Instance.CurrentBelayer.SendMessage("SlipRight", SendMessageOptions.DontRequireReceiver);
+			}
 			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
 		}
 
