@@ -23,20 +23,35 @@ public class ClimbInput : MonoBehaviour {
 	public Vector3 rightHang;
 	public bool lHandHanging = false;
 	public bool rHandHanging = false;
-	private float fallRate = 4.0f;
+	private float fallRate = 0.0f;
 	public bool canPullUp;
+
+	// Endstate 
+	public GameObject platform = null;
+	public bool onPlatform = false;
+	private Vector3 platformStand;
+	public bool safe = false;
+	public Vector3 leftVict;
+	public Vector3 rightVict;
 
 	void Awake()
 	{
 		MoveBodyBetweenHands();
 		ResetHandColors();
-
-		leftHang = new Vector3(-0.75f,-0.7f,0);
-
-		rightHang = new Vector3(0.75f,-0.7f,0);
-
 	}
 
+	void Start()
+	{
+		leftHang = new Vector3(-0.75f,-0.7f,0.0f);
+		rightHang = new Vector3(0.75f,-0.7f,0.0f);
+		leftVict = new Vector3(-0.75f,0.9f,0.0f);
+		rightVict = new Vector3(0.75f,0.9f,0.0f);
+		if (platform != null)
+		{
+			platformStand.y = platform.transform.position.y;
+			platformStand.y += 1.5f;
+		}
+	}
 	void Update()
 	{
 		if (!ClimberManager.Instance.rope.IsTaught)
@@ -78,19 +93,19 @@ public class ClimbInput : MonoBehaviour {
 
 			if (Input.GetButtonDown("Top"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Top);
 			}
 			else if (Input.GetButtonDown("Left"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Left);
 			}
 			else if (Input.GetButtonDown("Bottom"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Bottom);
 			}
 			else if (Input.GetButtonDown("Right"))
 			{
-				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right, handPos, transform.position.y, moveUp);
+				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right);
 			}
 
 			if (nextHandhold != null && (nextHandhold.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(maxArmDistance, 2))
@@ -115,10 +130,32 @@ public class ClimbInput : MonoBehaviour {
 			}
 		}
 
+		transform.Translate(Vector3.down * Time.deltaTime * fallRate);
+		platformStand.x = transform.position.x;
+		platformStand.z = transform.position.z;
+
 		if(lHandHanging && rHandHanging)
 		{
-			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
+			fallRate = 4.0f;
+			//print("falling");
 			MoveBodyBetweenHands();
+		}
+
+		if(onPlatform == true)
+		{
+			//print("On Platform");
+			fallRate = 0.0f;
+			lHandHanging = false;
+			rHandHanging = false;
+			transform.position = platformStand;
+			leftHand.transform.localPosition = leftHang;
+			rightHand.transform.localPosition = rightHang;
+			onPlatform = false;
+		}
+
+		if(platform != null && transform.position.y > platform.transform.position.y + 2.0f)
+		{
+			//platform.collider.enabled = true;
 		}
 	}// End of Update
 
@@ -147,7 +184,7 @@ public class ClimbInput : MonoBehaviour {
 		{
 			if (!ClimberManager.Instance.rope.ropeLost)
 			{
-				if (Input.GetAxis("Braking") > .5)
+				if (Input.GetAxis("Braking") > .5 || !(lHandHanging && rHandHanging))
 				{
 					Vector3 fromPartner = (newPosition - partner.transform.position).normalized;
 					newPosition = partner.transform.position + (fromPartner * maxPartnerDistance);
@@ -185,4 +222,28 @@ public class ClimbInput : MonoBehaviour {
 		rightHand.transform.localPosition = rightHang;
 		rHandHanging = true;
 	}
+
+	void OnTriggerEnter(Collider collide)
+	{
+		if(collide.gameObject == platform)
+		{
+			onPlatform = true;
+			//platform.collider.enabled = false;
+			safe = true;
+		}
+	}
+	void OnTriggerExit(Collider collide)
+	{
+		if(collide.gameObject == platform)
+		{
+			safe = false;
+		}
+	}
+	void VictHands()
+	{
+		leftHand.transform.localPosition = leftVict;
+		rightHand.transform.localPosition = rightVict;
+		print ("victory");
+	}
+	
 }
