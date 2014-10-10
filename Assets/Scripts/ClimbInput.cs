@@ -23,20 +23,33 @@ public class ClimbInput : MonoBehaviour {
 	public Vector3 rightHang;
 	public bool lHandHanging = false;
 	public bool rHandHanging = false;
-	private float fallRate = 4.0f;
+	private float fallRate = 0.0f;
 	public bool canPullUp;
+
+	// Endstate 
+	public GameObject platform = null;
+	public bool onPlatform = false;
+	private Vector3 platformStand;
+	public bool safe = false;
+	public Vector3 leftVict;
+	public Vector3 rightVict;
 
 	void Awake()
 	{
 		MoveBodyBetweenHands();
 		ResetHandColors();
-
-		leftHang = new Vector3(-0.75f,-0.7f,0);
-
-		rightHang = new Vector3(0.75f,-0.7f,0);
-
 	}
 
+	void Start()
+	{
+		leftHang = new Vector3(-0.75f,-0.7f,0.0f);
+		rightHang = new Vector3(0.75f,-0.7f,0.0f);
+		leftVict = new Vector3(-0.75f,0.9f,0.0f);
+		rightVict = new Vector3(0.75f,0.9f,0.0f);
+		platformStand.y = platform.transform.position.y;
+		platformStand.y += 1.5f;
+
+	}
 	void Update()
 	{
 		if (!ClimberManager.Instance.rope.IsTaught)
@@ -115,10 +128,32 @@ public class ClimbInput : MonoBehaviour {
 			}
 		}
 
+		transform.Translate(Vector3.down * Time.deltaTime * fallRate);
+		platformStand.x = transform.position.x;
+		platformStand.z = transform.position.z;
+
 		if(lHandHanging && rHandHanging)
 		{
-			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
+			fallRate = 4.0f;
+			//print("falling");
 			MoveBodyBetweenHands();
+		}
+
+		if(onPlatform == true)
+		{
+			//print("On Platform");
+			fallRate = 0.0f;
+			lHandHanging = false;
+			rHandHanging = false;
+			transform.position = platformStand;
+			leftHand.transform.localPosition = leftHang;
+			rightHand.transform.localPosition = rightHang;
+			onPlatform = false;
+		}
+
+		if(transform.position.y > platform.transform.position.y + 2.0f)
+		{
+			//platform.collider.enabled = true;
 		}
 	}// End of Update
 
@@ -185,4 +220,28 @@ public class ClimbInput : MonoBehaviour {
 		rightHand.transform.localPosition = rightHang;
 		rHandHanging = true;
 	}
+
+	void OnTriggerEnter(Collider collide)
+	{
+		if(collide.gameObject == platform)
+		{
+			onPlatform = true;
+			//platform.collider.enabled = false;
+			safe = true;
+		}
+	}
+	void OnTriggerExit(Collider collide)
+	{
+		if(collide.gameObject == platform)
+		{
+			safe = false;
+		}
+	}
+	void VictHands()
+	{
+		leftHand.transform.localPosition = leftVict;
+		rightHand.transform.localPosition = rightVict;
+		print ("victory");
+	}
+	
 }
