@@ -157,6 +157,11 @@ public class Handhold : MonoBehaviour {
 			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
 		}
 
+		if (!stable && !animation.isPlaying)
+		{
+			//animation.Play();
+		}
+
 	}// End of Update
 
 	public void AboutToFall()

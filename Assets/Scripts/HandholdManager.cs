@@ -45,8 +45,8 @@ public class HandholdManager : MonoBehaviour {
 		for (int i = 0; i < handholds.Length; i++)
 		{
 			Handhold handhold = handholds[i].GetComponent<Handhold>();
-			float sqrDist = (handholds[i].transform.position - climber.handPos).sqrMagnitude;
-			bool correctDirection = (climber.moveUp && handhold.transform.position.y >= climber.transform.position.y) || (!climber.moveUp && handhold.transform.position.y <= climber.transform.position.y);
+			float sqrDist = (handholds[i].transform.position - climber.transform.position).sqrMagnitude;
+			bool correctDirection = (climber.moveUp && handhold.transform.position.y >= climber.handPos.y) || (!climber.moveUp && handhold.transform.position.y <= climber.handPos.y);
 			if ((handhold != null && handhold.buttonType == buttonType && correctDirection) && (nearHandhold == null || sqrDist < minSqrDist))
 			{
 				nearHandhold = handhold;

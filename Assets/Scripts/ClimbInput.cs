@@ -108,7 +108,7 @@ public class ClimbInput : MonoBehaviour {
 				nextHandhold = HandholdManager.Instance.NearestHandhold(Handhold.ButtonType.Right);
 			}
 
-			if (nextHandhold != null && (nextHandhold.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(maxArmDistance, 2))
+			if (nextHandhold != null)
 			{
 				if (movingLeftHand)
 				{
@@ -139,6 +139,10 @@ public class ClimbInput : MonoBehaviour {
 			fallRate = 4.0f;
 			//print("falling");
 			MoveBodyBetweenHands();
+		}
+		else
+		{
+			fallRate = 0.0f;
 		}
 
 		if(onPlatform == true)
