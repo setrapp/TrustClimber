@@ -6,13 +6,16 @@ public class Handhold : MonoBehaviour {
 	public TextMesh idText;
 
 	//Rock falling Elements
-	private GameObject leftHand;
-	private GameObject rightHand;
+	private GameObject cleftHand;
+	private GameObject crightHand;
+	private GameObject bleftHand;
+	private GameObject brightHand;
 	private Vector3 myPosition;
 	public bool stable = true;
 	public bool falling = false;
 	private float fallRate = 4.0f;
 	private float dislodge = 4.0f;
+	public bool isHeld = false;
 
 	void Start(){
 		myPosition = transform.position;
@@ -29,8 +32,11 @@ public class Handhold : MonoBehaviour {
 	void Update()
 	{
 		ClimbInput climber = ClimberManager.Instance.CurrentClimber;
-		rightHand = climber.rightHand;
-		leftHand = climber.leftHand;
+		ClimbInput belayer = ClimberManager.Instance.CurrentBelayer;
+		crightHand = climber.rightHand;
+		cleftHand = climber.leftHand;
+		brightHand = belayer.rightHand;
+		bleftHand = belayer.leftHand;
 
 		switch(buttonType)
 		{
@@ -115,26 +121,34 @@ public class Handhold : MonoBehaviour {
 				break;
 		}
 
-		if(!stable && (leftHand.transform.position == myPosition || rightHand.transform.position == myPosition))
+		if(!stable && (cleftHand.transform.position == myPosition || crightHand.transform.position == myPosition))
 		{
-			//print ("held");
+			//print ("held");		
 			Invoke("AboutToFall",dislodge);
 		}
 
+		if(bleftHand.transform.position == myPosition || brightHand.transform.position == myPosition)
+		{
+			isHeld = true;
+			//print("held");
+		}
+		else
+			isHeld = false;
+
 		if(falling)
 		{
-			if(leftHand.transform.position == myPosition)
+			if(cleftHand.transform.position == myPosition)
 			{
 				ClimberManager.Instance.CurrentClimber.SendMessage("SlipLeft",SendMessageOptions.DontRequireReceiver);
 			}
-			else if (rightHand.transform.position == myPosition)
+			else if (crightHand.transform.position == myPosition)
 			{
 				ClimberManager.Instance.CurrentClimber.SendMessage("SlipRight",SendMessageOptions.DontRequireReceiver);
 			}
 			transform.Translate(Vector3.down * Time.deltaTime * fallRate);
 		}
 
-	}
+	}// End of Update
 
 	public void AboutToFall()
 	{
